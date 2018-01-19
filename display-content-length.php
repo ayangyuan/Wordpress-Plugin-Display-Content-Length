@@ -17,7 +17,7 @@
  * GitHub URI:  https://github.com/ayangyuan/Wordpress-Plugin-Display-Content-Length 
  * Author URI:  https://squaredaway.studio/wordpress-plugin-display-content-length/ 
  * Author:      Mr.ING 
- * Version:     1.0.3 
+ * Version:     1.0.4 
  * Text Domain: display-content-length 
  * Domain Path: /res/lang
  * License:     GPL-2.0+
@@ -42,9 +42,10 @@ add_filter('manage_post_posts_columns', function ( $columns )
 
 add_action( 'manage_post_posts_custom_column', function ( $column_name, $post_id ) 
 {
-    if ( $column_name == 'wpse_post_content_length')
-        echo mb_strlen( get_post( $post_id )->post_content );
-
+    if ( $column_name == 'wpse_post_content_length'){
+        $strlen = mb_strlen( get_post( $post_id )->post_content );
+        echo number_format($strlen);
+    }
 }, 10, 2 );
 
 add_filter( 'manage_edit-post_sortable_columns', function ( $columns ) 
@@ -70,23 +71,17 @@ add_filter( 'posts_orderby', function( $orderby, \WP_Query $q )
     return $orderby;
 }, 10, 2 );
 
-
-/**
- * Add links to the plugin action row.
- */
-function mr_ing_dcl_plugin_actions( $links, $file ) {
-
-        if ( plugin_basename( MR_ING_DCL_PLUGIN_FILE ) === $file ) {
-
-                $new_links = array(
-                        'support'    => '<a href = "http://wordpress.org/support/plugin/display_content_length">' . __( 'Support' ) . '</a>',
-                        'donate'     => '<a href = "https://squaredaway.studio/donate/">' . __( 'Donate') . '</a>',
-                        'contribute' => '<a href = "https://github.com/ayangyuan/Wordpress-Plugin-Display-Content-Length">' . __( 'Contribute' ) . '</a>',
-                );
-
-                $links = array_merge( $links, $new_links );
-        }
-        return $links;
+/** Add links to the plugin action row. */
+function mr_ing_dcl_plugin_row_meta( $links, $file ) {
+  if ( plugin_basename( __FILE__ ) === $file ) {
+    $new_links = array(
+    'support'    => '<a href = "http://wordpress.org/support/plugin/display-content-length">' . __( 'Support' ) . '</a>',
+    'donate'     => '<a href = "https://squaredaway.studio/donate/">' . __( 'Donate') . '</a>',
+    'contribute' => '<a href = "https://github.com/ayangyuan/Wordpress-Plugin-Display-Content-Length">' . __( 'Contribute' ) . '</a>',
+     );
+     $links = array_merge( $links, $new_links );
+   }
+   return $links;
 }
-add_filter( 'plugin_row_meta', 'mr_ing_dcl_plugin_actions', 10, 2 );
+add_filter( 'plugin_row_meta', 'mr_ing_dcl_plugin_row_meta', 10, 2 );
 

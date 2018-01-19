@@ -66,7 +66,7 @@ I have no idea.
 
 == Changelog ==
 
-= 1.0.3 =
+= 1.0.4 =
 
 * Released:
         * Add screenshot, logo and banner.
@@ -75,6 +75,3 @@ I have no idea.
 = 1.0.0 =
 
 * Initialized.
-
-
-
