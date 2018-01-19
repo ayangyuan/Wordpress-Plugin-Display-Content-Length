@@ -1,15 +1,31 @@
 <?php
-/*
-Plugin Name: Display Content Length 
-Plugin URI: https://wordpress.org/plugins/display-content-length/
-Github: https://github.com/ayangyuan/Wordpress-Plugin-Display-Content-Length.git 
-Description: Show post content lenth and sort.
-Version: 1.0.0 
-Author: Yuan Yang
-Author URI: https://84361749.com
-Text Domain: display-content-length
+/**
+ * Display Content Length.
+ *
+ * Display Content Length is the only posts plugin for WordPress that
+ * allows you to display the length of posts and sort them.
+ *
+ * @package   Display Content Length 
+ * @author    Mr.ING <ayangyuan@gmail.com>
+ * @license   GPL-2.0+
+ * @link      https://squaredaway.studio/wordpress-plugin-display-content-length/ 
+ * @copyright 1999-2018 
+ *
+ * @wordpress-plugin
+ * Plugin Name: Display Content Length 
+ * Plugin URI:  https://wordpress.org/plugins/display-content-length/ 
+ * GitHub URI:  https://github.com/ayangyuan/Wordpress-Plugin-Display-Content-Length 
+ * Author URI:  https://squaredaway.studio/wordpress-plugin-display-content-length/ 
+ * Author:      Mr.ING 
+ * Version:     1.0.3 
+ * Text Domain: display-content-length 
+ * Domain Path: /res/lang
+ * License:     GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Description: Display content length of posts on your posts manage panel and sort them. 
+ */
 
-*/
+if ( ! defined( 'MR_ING_DCL_PLUGIN_FILE' ) ) {define( 'MR_ING_DCL_PLUGIN_FILE', __FILE__ );}
 
 add_filter('manage_post_posts_columns', function ( $columns ) 
 {
@@ -53,3 +69,24 @@ add_filter( 'posts_orderby', function( $orderby, \WP_Query $q )
     }
     return $orderby;
 }, 10, 2 );
+
+
+/**
+ * Add links to the plugin action row.
+ */
+function mr_ing_dcl_plugin_actions( $links, $file ) {
+
+        if ( plugin_basename( MR_ING_DCL_PLUGIN_FILE ) === $file ) {
+
+                $new_links = array(
+                        'support'    => '<a href = "http://wordpress.org/support/plugin/display_content_length">' . __( 'Support' ) . '</a>',
+                        'donate'     => '<a href = "https://squaredaway.studio/donate/">' . __( 'Donate') . '</a>',
+                        'contribute' => '<a href = "https://github.com/ayangyuan/Wordpress-Plugin-Display-Content-Length">' . __( 'Contribute' ) . '</a>',
+                );
+
+                $links = array_merge( $links, $new_links );
+        }
+        return $links;
+}
+add_filter( 'plugin_row_meta', 'mr_ing_dcl_plugin_actions', 10, 2 );
+
